@@ -65,3 +65,7 @@ class Actions:
 # Перемещение одного элемента к другому
     def drag_and_drop(self, browser, el1, el2):
         ActionChains(browser).drag_and_drop(el1, el2).perform()
+
+# Перемещение мыши от элемента по заданным координатам
+    def move_by_offset(self, browser, el, x, y):
+        ActionChains(browser).move_to_element_with_offset(el, x, y).perform()
