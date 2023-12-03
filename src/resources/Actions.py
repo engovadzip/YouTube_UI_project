@@ -55,6 +55,9 @@ class Actions:
     def scroll_to_element(self, browser, element):
         browser.execute_script("arguments[0].scrollIntoView();", element)
 
+    def scroll_element_to_page_center(self, browser, element):
+        browser.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+
 # Перемещение мыши к элементу
     def move_to_element(self, browser, element):
         ActionChains(browser).move_to_element(element).perform()

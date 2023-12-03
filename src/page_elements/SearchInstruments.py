@@ -16,7 +16,7 @@ class Locators:
     SEARCH_BUTTON_XP = (By.XPATH, '//button[@id="search-icon-legacy"]')
 
 # Название видео в результатах поиска
-    SEARCHED_VIDEO_TITLE_XP = (By.XPATH, '//yt-formatted-string[@class="style-scope ytd-video-renderer" and @aria-label]')
+    SEARCHED_VIDEO_TITLE_CSS = (By.XPATH, '//yt-formatted-string[@class="style-scope ytd-video-renderer" and @aria-label]')
 
 locator = Locators()
 
@@ -29,24 +29,15 @@ class Actions:
         search_button.click()
 
     def check_results(self, browser, search, component):
-        search_results = browse.elements(browser, *locator.SEARCHED_VIDEO_TITLE_XP, f'{component}')
+        search_results = browse.elements(browser, *locator.SEARCHED_VIDEO_TITLE_CSS, f'{component}')
         correct_results = [el for el in search_results if search.lower() in el.text.lower()]
-
-        if len(correct_results) == 0:
-            for i in range(5):
-                action.scroll_to_element(search_results[-1])
-                search_results = browse.elements(browser, *locator.SEARCHED_VIDEO_TITLE_XP, f'{component}')
-                correct_results = [el for el in search_results if search.lower() in el.text.lower()]
-
-                if len(correct_results) > 0:
-                    break
 
         assert len(correct_results) > 0, f'Среди первых {len(correct_results)} результатов поиска не найдено видео "{search}". Попробуйте использовать другие ключевые слова.'
 
 
     def collect_results(self, browser, search, component):
         self.check_results(browser, search, component)
-        search_results = browse.elements(browser, *locator.SEARCHED_VIDEO_TITLE_XP, f'{component}')
+        search_results = browse.elements(browser, *locator.SEARCHED_VIDEO_TITLE_CSS, f'{component}')
         correct_results = [el for el in search_results if search.lower() in el.text.lower()]
 
         return correct_results

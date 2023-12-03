@@ -24,5 +24,8 @@ def test_1_step_3(browser):
 def test_1_step_4(browser):
     videos = search_action.collect_results(browser, 'Зубарев', 'Видео в результатах поиска')
     video = search_action.random_result(videos)
+    video_action.open_video(browser, video)
 
-    video_action.open_searched_video(browser, video)
+@allure.step("Проверка воспроизведения видео")
+def test_1_step_5(browser):
+    video_action.check_video_playback(browser)
