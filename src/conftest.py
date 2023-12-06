@@ -10,12 +10,14 @@ def pytest_addoption(parser):
 def browser(link, request):
     browser_name = request.config.getoption("browser")
 
-    if browser_name  == 'chrome':
+    if browser_name.lower()  == 'chrome':
         browser = webdriver.Chrome()
-    elif browser_name == 'firefox':
+    elif browser_name.lower() == 'firefox':
         browser = webdriver.Firefox()
-    elif browser_name == 'edge':
+    elif browser_name.lower() == 'edge':
         browser = webdriver.Edge()
+    else:
+        raise pytest.UsageError("Choose one of the following browsers: Chrome, Firefox or edge.")
 
     browser.maximize_window()
     browser.get(link)
@@ -34,7 +36,7 @@ def link():
 def videopart(request):
     videopart = request.config.getoption("videopart")
     if float(videopart) < 0 or float(videopart) > 1:
-        raise pytest.UsageError("The part of video must be more than 0 and less than 1!")
+        raise pytest.UsageError("The part of video must be more than 0 and less than 1.")
 
     return videopart
 
