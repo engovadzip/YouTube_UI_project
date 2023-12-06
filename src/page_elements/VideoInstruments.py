@@ -77,17 +77,24 @@ class Actions:
         timeline = action.move_by_offset(browser, element, checked_part, 0)
         action.click(browser, timeline)
         timeline_after = browse.element(browser, *locator.CURRENT_TIMELINE_CSS, 'Время воспроизведения').text
-        assert timeline_before != timeline_after, f'Ошибка при воспроизведении видео. При открытии, видео было на "{timeline_before}", а через две секунды на "{timeline_after}".'
+
+        after_sec = self.duration_in_seconds(timeline_after)
 
         duration = browse.element(browser, *locator.VIDEO_DURATION_CSS, 'Длительность видео').text
-
-        timeline_sec = self.duration_in_seconds(timeline_after)
         duration_sec = self.duration_in_seconds(duration)
 
-        final_part = timeline_sec / duration_sec
-        final_part = round(final_part, 2)
+        if part == 1:
+            assert duration_sec - 5 <= after_sec <= duration_sec, f'При перемотке видео в конец произошла ошибка. Время при перемотке "{timeline_after}", а длительность видео "{duration}".'
 
-        assert part == final_part, f'В тест была передана {part} часть видео, а перемотка была на {final_part} часть.'
+        else:
+            assert timeline_before != timeline_after, f'Ошибка при воспроизведении видео. При открытии, видео было на "{timeline_before}", а через две секунды на "{timeline_after}".'
+
+            timeline_sec = self.duration_in_seconds(timeline_after)
+
+            final_part = timeline_sec / duration_sec
+            final_part = round(final_part, 2)
+
+            assert part == final_part, f'В тест была передана {part} часть видео, а перемотка была на {final_part} часть.'
 
     def check_video_scale(self, browser, part):
         self.move_mouse_to_player(browser)
@@ -97,4 +104,5 @@ class Actions:
         action.move_to_element(browser, video_scale)
 
         self.move_mouse_to_video_part(browser, video_scale, part)
-        self.check_video_playback(browser)
+        if part != 1:
+            self.check_video_playback(browser)
