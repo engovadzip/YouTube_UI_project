@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 from random import randint
-from resources import Actions, BrowseElements
+from utils import Actions, BrowseElements
 
 action = Actions.Actions()
 browse = BrowseElements.BrowseElements()

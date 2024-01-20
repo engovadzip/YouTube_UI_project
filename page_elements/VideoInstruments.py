@@ -1,4 +1,4 @@
-from resources import Actions, BrowseElements
+from utils import Actions, BrowseElements
 from selenium.webdriver.common.by import By
 import time
 

@@ -6,7 +6,7 @@ from allure_commons.types import AttachmentType
 
 def pytest_addoption(parser):
     parser.addoption('--browser', action='store', default='chrome')
-    parser.addoption('--search', action='store', default='youtube')
+    parser.addoption('--search', action='store', default='YouTube')
     parser.addoption('--videopart', action='store', default='0.33')
 
 @pytest.fixture(scope='session', autouse=True)

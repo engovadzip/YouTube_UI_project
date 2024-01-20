@@ -1,4 +1,4 @@
-from resources import Actions
+from utils import Actions
 
 action = Actions.Actions()
 

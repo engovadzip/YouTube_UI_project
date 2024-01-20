@@ -1,4 +1,4 @@
-from resources import Actions
+from utils import Actions
 from page_elements import SearchInstruments, VideoInstruments
 import allure
 
@@ -8,12 +8,12 @@ search_action = SearchInstruments.Actions()
 video_action = VideoInstruments.Actions()
 
 
-@allure.step("Check YouTube video search and video playback")
+@allure.story("Check YouTube video search and video playback")
 def test_youtube_video_playback(browser, search, videopart):
     with allure.step("Open YouTube main page"):
         action.assert_wait(browser, 5, *locator.LOGIN_XP, "Main page doesn't open.")
 
-    with allure.step("Input search request in search string"):
+    with allure.step(f'Input search request "{search}" in search string'):
         search_action.search_video(browser, search)
 
     with allure.step("Check that at least one video is found"):
