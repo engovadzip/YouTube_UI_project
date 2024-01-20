@@ -1,17 +1,16 @@
 from resources import Actions
-from selenium.webdriver.common.keys import Keys
 
 action = Actions.Actions()
 
 class BrowseElements:
     def element(self, browser, how, what, element):
-        action.assert_wait(browser, 5, how, what, f'Элемент "{element}" не найден.')
+        action.assert_wait(browser, 5, how, what, f'Element "{element}" is not found.')
         el = browser.find_element(how, what)
 
         return el
 
     def elements(self, browser, how, what, elements):
-        action.assert_wait(browser, 5, how, what, f'Элементы "{elements}" не найдены.')
+        action.assert_wait(browser, 5, how, what, f'Elements "{elements}" are not found.')
         els = browser.find_elements(how, what)
 
         return els
