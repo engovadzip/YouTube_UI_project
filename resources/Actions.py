@@ -1,9 +1,10 @@
 from selenium.common.exceptions import (ElementNotVisibleException, NoSuchElementException,
                                         TimeoutException, WebDriverException)
 from selenium.webdriver import ActionChains
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+import allure
+from allure_commons.types import AttachmentType
 
 
 class Actions:
@@ -44,12 +45,18 @@ class Actions:
 # Проверка появления элемента на странице
     def assert_wait(self, browser, time, how, what, message):
         self.wait(browser, time, how, what)
-        assert self.wait(browser, time, how, what), message
+        if self.wait(browser, time, how, what) == False:
+            allure.attach(browser.get_screenshot_as_png(), name="Failed step screenshot",
+                          attachment_type=AttachmentType.PNG)
+            assert False, f'{message}'
 
 # Проверка наличия и "кликабельности" элемента
     def assert_clickable(self, browser, time, how, what, message):
         self.clickable(browser, time, how, what)
-        assert self.clickable(browser, time, how, what), message
+        if self.clickable(browser, time, how, what) == False:
+            allure.attach(browser.get_screenshot_as_png(), name="Failed step screenshot",
+                          attachment_type=AttachmentType.PNG)
+            assert False, f'{message}'
 
 # Прокручивание мышью до области видимости элемента
     def scroll_to_element(self, browser, element):

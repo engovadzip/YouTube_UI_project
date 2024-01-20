@@ -1,8 +1,11 @@
 from selenium import webdriver
 import pytest
+import allure
+from allure_commons.types import AttachmentType
+
 
 def pytest_addoption(parser):
-    parser.addoption('--browser', action='store', default='firefox')
+    parser.addoption('--browser', action='store', default='chrome')
     parser.addoption('--search', action='store', default='youtube')
     parser.addoption('--videopart', action='store', default='0.33')
 
@@ -10,19 +13,20 @@ def pytest_addoption(parser):
 def browser(link, request):
     browser_name = request.config.getoption("browser")
 
-    if browser_name.lower()  == 'chrome':
+    if browser_name.lower() == 'chrome':
         browser = webdriver.Chrome()
     elif browser_name.lower() == 'firefox':
         browser = webdriver.Firefox()
     elif browser_name.lower() == 'edge':
         browser = webdriver.Edge()
     else:
-        raise pytest.UsageError("Choose one of the following browsers: Chrome, Firefox or edge.")
+        raise pytest.UsageError("Choose one of the following browsers: Chrome, Firefox or Edge.")
 
     browser.maximize_window()
     browser.get(link)
 
     yield browser
+    allure.attach(browser.get_screenshot_as_png(), name="Screenshot", attachment_type=AttachmentType.PNG)
     browser.close()
     browser.quit()
 
