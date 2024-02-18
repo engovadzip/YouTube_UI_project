@@ -27,5 +27,5 @@ def test_youtube_video_playback(browser, search, videopart):
     with allure.step("Check video playback"):
         video_action.check_video_playback(browser)
 
-    with allure.step("Check that video rewind is correct"):
+    with allure.step(f"Check that video rewind to {videopart} part is correct"):
         video_action.check_video_scale(browser, float(videopart))
