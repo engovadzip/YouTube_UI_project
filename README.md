@@ -126,9 +126,13 @@ Also, you can set the options on tests using the following parameters in command
 * ```--search``` sets search request that will be used for video search.  
 * ```--videopart``` sets part of video to rewind. The values range is 0.00 to 1.00.  
 
-For example, if you want to search "Mr. Beast" videos and rewind it to 0.56 part, run the following command:  
+For example, if you want to search for "GX1000" videos and rewind it to 0.56 part, run the following command:  
 ```
-pytest --search="Mr. Beast" --videopart="0.56"
+pytest --search=GX1000 --videopart=0.56
 ```  
+Its command result from Allure Report is provided below:
+<p align="center">
+    <img src="resources/allure_report_3.png" />  
+</p>  
 
 If you don't set any option, it will have default value as described above.  
